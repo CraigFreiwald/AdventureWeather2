@@ -1,7 +1,6 @@
 from flask import Flask, render_template, request, abort
 # import json to load json data to python dictionary
 import json
-import ijson
 # urllib.request to make a request to api
 import urllib.request
 
@@ -21,10 +20,13 @@ def toFahrenheit(temp):
 
 # finds requested city id in cit.list.json
 def findID(city):
-    with open('cit.list.json', 'rb') as input_file:
-        parser = ijson.parse(input_file)
-        for city, str, name in parser:
-            print('parent={}, data_type={}, value={}'.format(city, str, name))
+    input_file = open('city.list.json')
+    json_array = json.load(input_file)
+    city_list = []
+
+    for item in json_array:
+        city_name = {"name": None, "id": None, 'name': item['name'], 'id': item['id']}
+        city_list.append(city_name)
 
 
 @app.route('/', methods=['POST', 'GET'])
@@ -54,7 +56,7 @@ def weather():
         "pressure": str(list_of_data['main']['pressure']),
         "humidity": str(list_of_data['main']['humidity']),
         "cityname": str(city),
-        # "cityid": str(cityid)
+        # "cityid": findID(city)
     }
     return render_template('index.html', data=data)
 
