@@ -43,7 +43,7 @@ def weather():
         "temp_cel": toCelsius(list_of_data['main']['temp']) + ' C',
         "pressure": str(list_of_data['main']['pressure']),
         "humidity": str(list_of_data['main']['humidity']),
-        "cityname": str(city),
+        "city-name": str(city),
     }
     return render_template('index.html', data=data)
 
