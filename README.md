@@ -7,4 +7,4 @@ Flask 2.1.2
 
 **To Run**
 
-Clone project and run weather.py in Virtual Environment with Flask 
+Clone project and run weather.py in Python Virtual Environment with Flask installed.
