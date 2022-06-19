@@ -12,8 +12,7 @@ def tocelcius(temp):
 
 
 def tofahrenheit(temp):
-    inf = round((float(temp) - 273.16), 2)
-    inf = inf * 1.8 + 32
+    inf = round((float(temp) - 273.16), 2) * 1.8 + 32
     return str(round(inf, 0))
 
 
