@@ -16,11 +16,20 @@ def toFahrenheit(temp):
     return str(round(inf, 0))
 
 
+
 @app.route('/', methods=['POST', 'GET'])
 def weather():
     api_key = '66e64fc4eb7e73b64c9e5eeccfcaed4c'
     if request.method == 'POST':
         city = request.form['city']
+
+        # finds city id in cit.list.json
+        def findID(city):
+            with open('cit.list.json', 'r') as city_list:
+                city_data = json.load(city_list)
+
+                print(city_data)
+
         # cityid = request.form['cityid']
     else:
         # default city
@@ -33,7 +42,6 @@ def weather():
     except:
         return abort(404)
     # converting json data to dictionary
-
     list_of_data = json.loads(source)
 
     # data for variable list_of_data
