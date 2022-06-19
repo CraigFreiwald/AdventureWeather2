@@ -21,6 +21,7 @@ def weather():
     api_key = '66e64fc4eb7e73b64c9e5eeccfcaed4c'
     if request.method == 'POST':
         city = request.form['city']
+        # cityid = request.form['cityid']
     else:
         # default city
         city = 'Miami'
@@ -44,6 +45,7 @@ def weather():
         "pressure": str(list_of_data['main']['pressure']),
         "humidity": str(list_of_data['main']['humidity']),
         "cityname": str(city),
+        # "cityid": str(cityid)
     }
     return render_template('index.html', data=data)
 
