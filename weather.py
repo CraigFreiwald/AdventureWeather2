@@ -1,20 +1,30 @@
 from flask import Flask, render_template, request, abort
 # import json to load json data to python dictionary
 import json
+import ijson
 # urllib.request to make a request to api
 import urllib.request
 
 app = Flask(__name__)
 
+
 # converts kelvin returned from API to Celsius
 def toCelsius(temp):
     return str(round(float(temp) - 273.16, 1))
+
 
 # converts kelvin returned from API to Fahrenheit
 def toFahrenheit(temp):
     inf = round((float(temp) - 273.16), 2) * 1.8 + 32
     return str(round(inf, 0))
 
+
+# finds city id in cit.list.json
+def findID(city):
+    with open('cit.list.json', 'rb') as input_file:
+        parser = ijson.parse(input_file)
+        for city, str, name in parser:
+            print('parent={}, data_type={}, value={}'.format(city, str, name))
 
 
 @app.route('/', methods=['POST', 'GET'])
@@ -23,14 +33,11 @@ def weather():
     if request.method == 'POST':
         city = request.form['city']
 
-        # finds city id in cit.list.json
-        def findID(city):
-            with open('cit.list.json', 'r') as city_list:
-                city_data = json.load(city_list)
 
-                print(city_data)
 
-        # cityid = request.form['cityid']
+
+
+
     else:
         # default city
         city = 'Miami'
