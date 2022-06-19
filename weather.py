@@ -19,7 +19,7 @@ def toFahrenheit(temp):
     return str(round(inf, 0))
 
 
-# finds city id in cit.list.json
+# finds requested city id in cit.list.json
 def findID(city):
     with open('cit.list.json', 'rb') as input_file:
         parser = ijson.parse(input_file)
