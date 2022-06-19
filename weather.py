@@ -32,12 +32,6 @@ def weather():
     api_key = '66e64fc4eb7e73b64c9e5eeccfcaed4c'
     if request.method == 'POST':
         city = request.form['city']
-
-
-
-
-
-
     else:
         # default city
         city = 'Miami'
