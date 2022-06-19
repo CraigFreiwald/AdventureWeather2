@@ -6,12 +6,12 @@ import urllib.request
 
 app = Flask(__name__)
 
-
-def tocelcius(temp):
+# converts kelvin returned from API to Celsius
+def toCelsius(temp):
     return str(round(float(temp) - 273.16, 1))
 
-
-def tofahrenheit(temp):
+# converts kelvin returned from API to Fahrenheit
+def toFahrenheit(temp):
     inf = round((float(temp) - 273.16), 2) * 1.8 + 32
     return str(round(inf, 0))
 
@@ -39,8 +39,8 @@ def weather():
     data = {
         "country_code": str(list_of_data['sys']['country']),
         "coordinate": str(list_of_data['coord']['lon']) + ' ' + str(list_of_data['coord']['lat']),
-        "temp": tofahrenheit(list_of_data['main']['temp']) + ' F',
-        "temp_cel": tocelcius(list_of_data['main']['temp']) + ' C',
+        "temp": toFahrenheit(list_of_data['main']['temp']) + ' F',
+        "temp_cel": toCelsius(list_of_data['main']['temp']) + ' C',
         "pressure": str(list_of_data['main']['pressure']),
         "humidity": str(list_of_data['main']['humidity']),
         "cityname": str(city),
