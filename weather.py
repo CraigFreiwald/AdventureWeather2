@@ -18,15 +18,15 @@ def toFahrenheit(temp):
     return str(round(inf, 0))
 
 
-# finds requested city id in cit.list.json
-def findID(city):
-    input_file = open('city.list.json')
-    json_array = json.load(input_file)
-    city_list = []
-
-    for item in json_array:
-        city_name = {"name": None, "id": None, 'name': item['name'], 'id': item['id']}
-        city_list.append(city_name)
+# # finds requested city id in cit.list.json
+# def findID(city):
+#     input_file = open('city.list.json')
+#     json_array = json.load(input_file)
+#     city_list = []
+#
+#     for item in json_array:
+#         city_name = {"name": None, "id": None, 'name': item['name'], 'id': item['id']}
+#         city_list.append(city_name)
 
 
 @app.route('/', methods=['POST', 'GET'])
