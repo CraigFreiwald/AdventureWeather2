@@ -17,13 +17,6 @@ app.secret_key = os.urandom(12)
 app.config["SESSION_PERMANENT"] = False
 app.config['SESSION_TYPE'] = 'filesystem'
 
-# @app.route('/weather', methods={'POST'})
-# def weather():
-#     if not session.get('logged_in'):
-#         return render_template('login.html')
-#     else:
-#         return pingWeather()
-
 
 # Set routes for city request
 @app.route('/weather', methods=['POST'])
