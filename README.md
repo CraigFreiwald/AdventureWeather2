@@ -20,7 +20,7 @@ A Flask web-app which provides current and expected weather to users.
 
 ## **To Run**
 
-Clone project and run weather.py in Python Virtual Environment with Flask installed.
+Clone project and run app.py in Python Virtual Environment with Flask installed.
 
 
 ## **Specs List**
