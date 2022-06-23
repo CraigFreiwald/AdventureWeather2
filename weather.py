@@ -6,28 +6,16 @@
 # Last Date Changed: 23 June 2022
 # Revision #: 4
 
-import json
 import os
-import urllib.request
-from flask import Flask, flash, render_template, request, session, abort
 
+from flask import Flask, render_template, request, session
+
+from searchFunction import searchCity
 
 app = Flask(__name__)
 app.secret_key = os.urandom(12)
 app.config["SESSION_PERMANENT"] = False
 app.config['SESSION_TYPE'] = 'filesystem'
-
-
-# Converts Kelvin to Celsius
-def toCelsius(temp):
-    return str(round(float(temp) - 273.16, 1))
-
-
-# Converts Kelvin to Fahrenheit
-def toFahrenheit(temp):
-    inf = round((float(temp) - 273.16), 2) * 1.8 + 32
-    return str(round(inf, 0))
-
 
 # @app.route('/weather', methods={'POST'})
 # def weather():
@@ -38,37 +26,19 @@ def toFahrenheit(temp):
 
 
 # Set routes for city request
-@app.route('/weather', methods=['POST', 'GET'])
+@app.route('/weather', methods=['POST'])
 def weather():
-    api_key = '66e64fc4eb7e73b64c9e5eeccfcaed4c'
+    # Default City
+    city = 'Miami'
+    return render_template('weather.html', data=searchCity(city))
 
-    if request.method == 'POST':
-        # default city
-        city = 'Miami'
-    elif request.method == 'GET':
-        city = request.form['city']
 
-    # API Call from OpenWeather returns JSON of City data if found 404 if not
-    source = urllib.request.urlopen(
-            'https://api.openweathermap.org/data/2.5/weather?q=' + city + '&appid=' + api_key).read()
+@app.route('/searchresults', methods=['POST'])
+def search():
+    city = request.form['city']
 
-    # Convert JSON data to dictionary
-    list_of_data = json.loads(source)
-
-    # Data for loading variable list_of_data
-    data = {
-        "country_code": str(list_of_data['sys']['country']),
-        "coordinate": str(list_of_data['coord']['lon']) + ' ' + str(list_of_data['coord']['lat']),
-        "temp": toFahrenheit(list_of_data['main']['temp']) + ' F',
-        "temp_cel": toCelsius(list_of_data['main']['temp']) + ' C',
-        "pressure": str(list_of_data['main']['pressure']),
-        "humidity": str(list_of_data['main']['humidity']),
-        "cityname": str(city),
-        # cityid is used when findID function is active
-        # "cityid": findID(city)
-    }
     # Use data list to render info in index.html
-    return render_template('weather.html', data=data)
+    return render_template('weather.html', data=searchCity(city))
 
 
 @app.route('/')
@@ -79,7 +49,7 @@ def home():
         return do_admin_login()
 
 
-@app.route('/login', methods=['POST'])
+@app.route('/home', methods=['POST'])
 def do_admin_login():
     if request.form['username'] == 'admin' and request.form['password'] == 'password':
         session['logged_in'] = True
