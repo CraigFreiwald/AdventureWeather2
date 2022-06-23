@@ -18,22 +18,6 @@ app.config["SESSION_PERMANENT"] = False
 app.config['SESSION_TYPE'] = 'filesystem'
 
 
-# Set routes for city request
-@app.route('/weather', methods=['POST'])
-def weather():
-    # Default City
-    city = 'Miami'
-    return render_template('weather.html', data=searchCity(city))
-
-
-@app.route('/searchresults', methods=['POST'])
-def search():
-    city = request.form['city']
-
-    # Use data list to render info in index.html
-    return render_template('weather.html', data=searchCity(city))
-
-
 @app.route('/')
 def home():
     if not session.get('logged_in'):
@@ -49,6 +33,22 @@ def do_admin_login():
         return weather()
     else:
         return home()
+
+
+# Set routes for city request
+@app.route('/weather', methods=['POST'])
+def weather():
+    # Default City
+    city = 'Miami'
+    return render_template('weather.html', data=searchCity(city))
+
+
+@app.route('/results', methods=['POST'])
+def search():
+    city = request.form['city']
+
+    # Use data list to render info in index.html
+    return render_template('results.html', data=searchCity(city))
 
 
 @app.errorhandler(500)
