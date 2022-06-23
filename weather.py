@@ -3,8 +3,9 @@
 # Course: IST 440W
 # Authors: Craig Freiwald, Sabrina Matteoli, Zachary Huff
 # Date Developed: 14 June 2022
-# Last Date Changed: 21 June 2022
-# Revision #: 3
+# Last Date Changed: 23 June 2022
+# Revision #: 4
+
 import json
 import os
 import urllib.request
@@ -28,17 +29,17 @@ def toFahrenheit(temp):
     return str(round(inf, 0))
 
 
-@app.route('/weather', methods={'POST'})
-def weather():
-    if not session.get('logged_in'):
-        return render_template('login.html')
-    else:
-        return pingWeather()
+# @app.route('/weather', methods={'POST'})
+# def weather():
+#     if not session.get('logged_in'):
+#         return render_template('login.html')
+#     else:
+#         return pingWeather()
 
 
 # Set routes for city request
-@app.route('/pingWeather', methods=['POST', 'GET'])
-def pingWeather():
+@app.route('/weather', methods=['POST', 'GET'])
+def weather():
     api_key = '66e64fc4eb7e73b64c9e5eeccfcaed4c'
 
     if request.method == 'POST':
@@ -75,7 +76,7 @@ def home():
     if not session.get('logged_in'):
         return render_template('login.html')
     else:
-        return weather()
+        return do_admin_login()
 
 
 @app.route('/login', methods=['POST'])
@@ -84,14 +85,7 @@ def do_admin_login():
         session['logged_in'] = True
         return weather()
     else:
-        flash('wrong password!')
         return home()
-
-
-@app.route("/logout")
-def logout():
-    session['logged_in'] = False
-    return home()
 
 
 @app.errorhandler(500)
