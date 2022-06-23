@@ -5,38 +5,16 @@
 # Date Developed: 14 June 2022
 # Last Date Changed: 21 June 2022
 # Revision #: 3
-
-
-# Import Flask utilities
-from flask import Flask, render_template, request, abort
-# Import JSON to use json.loads() to add API return data to dictionary
 import json
-# Import urllib.request to make a request to api
+import os
 import urllib.request
+from flask import Flask, flash, render_template, request, session, abort
 
-import requests
 
-# Name to identify app when running
 app = Flask(__name__)
-
-
-def get_weather_results(zip_code, api_key):
-    api_url = "https://api.openweathermap.org/data/2.5/weather?zip={}&units=metric&appid={}".format(zip_code, api_key)
-    r = requests.get(api_url)
-    return r.json()
-
-
-@app.route('/result', methods=['POST'])
-def weatherDashboard():
-    zip_code = request.form['zipCode']
-    api_key = "66e64fc4eb7e73b64c9e5eeccfcaed4c"
-    data = get_weather_results(zip_code, api_key)
-    temp = '{0:.2f}'.format(data['main']['temp'])
-    feels = '{0:.2f}'.format(data['main']['feels_like'])
-    weathers = data['weather'][0]['main']
-    location = data['name']
-    return render_template('weather.html', weather=weathers, location=location, feels=feels, temp=temp,
-                           tempCmp=int(float(temp)))
+app.secret_key = os.urandom(12)
+app.config["SESSION_PERMANENT"] = False
+app.config['SESSION_TYPE'] = 'filesystem'
 
 
 # Converts Kelvin to Celsius
@@ -50,34 +28,28 @@ def toFahrenheit(temp):
     return str(round(inf, 0))
 
 
-# Possibly deprecated function - keeping for future use
-# # finds requested city id in cit.list.json
-# def findID(city):
-#     input_file = open('city.list.json')
-#     json_array = json.load(input_file)
-#     city_list = []
-#
-#     for item in json_array:
-#         city_name = {"name": None, "id": None, 'name': item['name'], 'id': item['id']}
-#         city_list.append(city_name)
+@app.route('/weather', methods={'POST'})
+def weather():
+    if not session.get('logged_in'):
+        return render_template('login.html')
+    else:
+        return pingWeather()
+
 
 # Set routes for city request
-@app.route('/', methods=['POST', 'GET'])
-def weather():
+@app.route('/pingWeather', methods=['POST', 'GET'])
+def pingWeather():
     api_key = '66e64fc4eb7e73b64c9e5eeccfcaed4c'
+
     if request.method == 'POST':
-        city = request.form['city']
-    else:
         # default city
         city = 'Miami'
+    elif request.method == 'GET':
+        city = request.form['city']
 
     # API Call from OpenWeather returns JSON of City data if found 404 if not
-    try:
-        source = urllib.request.urlopen(
+    source = urllib.request.urlopen(
             'https://api.openweathermap.org/data/2.5/weather?q=' + city + '&appid=' + api_key).read()
-    except:
-        print('api call unsuccessful')
-        return abort(404)
 
     # Convert JSON data to dictionary
     list_of_data = json.loads(source)
@@ -95,9 +67,37 @@ def weather():
         # "cityid": findID(city)
     }
     # Use data list to render info in index.html
-    return render_template('index.html', data=data)
+    return render_template('weather.html', data=data)
 
 
-# Run application (in debug mode)
-if __name__ == '__main__':
-    app.run(debug=True)
+@app.route('/')
+def home():
+    if not session.get('logged_in'):
+        return render_template('login.html')
+    else:
+        return weather()
+
+
+@app.route('/login', methods=['POST'])
+def do_admin_login():
+    if request.form['username'] == 'admin' and request.form['password'] == 'password':
+        session['logged_in'] = True
+        return weather()
+    else:
+        flash('wrong password!')
+        return home()
+
+
+@app.route("/logout")
+def logout():
+    session['logged_in'] = False
+    return home()
+
+
+@app.errorhandler(500)
+def error_500(error):
+    return render_template('500.html'), 500
+
+
+if __name__ == "__main__":
+    app.run(debug=True, host='0.0.0.0', port=5000)

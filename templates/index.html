@@ -1,78 +1,10 @@
-<!-- Adventure Weather Homepage -->
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
-
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>Adventure Weather</title>
-  <!-- Latest compiled and minified CSS -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-
-  <!-- jQuery library -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-
-  <!-- Latest compiled JavaScript -->
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-
+    <meta charset="UTF-8">
+    <title>We made it to the index. Hooray!</title>
 </head>
-
 <body>
 
-
-<nav class="row" style="background: #337ab7; color: white;">
-
-   <center> <h1 class="col-md-3 text-center">Adventure Weather</h1></center>
-
-  </nav>
-
-  <br />
-  <br />
-  <center class="row">
-    <form method="post" class="col-md-6 col-md-offset-3">
-      <div class="input-group">
-        <input type="text" class="form-control" name="city" placeholder="Search">
-        <div class="input-group-btn">
-          <button class="btn btn-primary" type="submit">
-            <i class="glyphicon glyphicon-search"></i>
-          </button>
-        </div>
-        <form>
-  </center>
-  <div class="row">
-    {% if data.country_code and data.coordinate and data.temp and data.pressure and data.humidity %}
-    <div class="col-md-6 col-md-offset-3">
-        <h5>Country : {{data.country_code}}</h5>
-        <h5>City : {{data.cityname}}</h5>
-        <h5>Coordinates : {{data.coordinate}}</h5>
-        <h5>Temperature (in Fahrenheit) : {{data.temp}}</h5>
-        <h5>Temperature (in Celsius) : {{data.temp_cel}}</h5>
-        <h5>Pressure : {{data.pressure}} </h5>
-        <h5>Humidity : {{data.humidity}}</h5>
-    </div>
-    <center class="row">
-    <form method="post">
-        <div class="input-group-btn">
-          <button type="button" style="font: bold 20px Arial;">Test Button</button>
-        </div>
-    <form>
-    </center>
-
-        <center>
-        <body>
-        <br />
-        <br />
-        <div id="openweathermap-widget-11"></div>
-        <h6><script src='//openweathermap.org/themes/openweathermap/assets/vendor/owm/js/d3.min.js'></script>
-        <script>window.myWidgetParam ? window.myWidgetParam : window.myWidgetParam = [];
-            window.myWidgetParam.push({id: 11,cityid: '4164138',appid: '66e64fc4eb7e73b64c9e5eeccfcaed4c',units: 'imperial',containerid: 'openweathermap-widget-11',  });
-            (function() {var script = document.createElement('script');
-            script.async = true;script.charset = "utf-8";script.src = "//openweathermap.org/themes/openweathermap/assets/vendor/owm/js/weather-widget-generator.js";
-            var s = document.getElementsByTagName('script')[0];s.parentNode.insertBefore(script, s);  })();
-        </script></h6>
-        </center>
-    {% endif %}
-
-  </div>
 </body>
-
 </html>
