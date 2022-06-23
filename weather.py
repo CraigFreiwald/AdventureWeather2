@@ -14,8 +14,29 @@ import json
 # Import urllib.request to make a request to api
 import urllib.request
 
+import requests
+
 # Name to identify app when running
 app = Flask(__name__)
+
+
+def get_weather_results(zip_code, api_key):
+    api_url = "https://api.openweathermap.org/data/2.5/weather?zip={}&units=metric&appid={}".format(zip_code, api_key)
+    r = requests.get(api_url)
+    return r.json()
+
+
+@app.route('/result', methods=['POST'])
+def weatherDashboard():
+    zip_code = request.form['zipCode']
+    api_key = "66e64fc4eb7e73b64c9e5eeccfcaed4c"
+    data = get_weather_results(zip_code, api_key)
+    temp = '{0:.2f}'.format(data['main']['temp'])
+    feels = '{0:.2f}'.format(data['main']['feels_like'])
+    weathers = data['weather'][0]['main']
+    location = data['name']
+    return render_template('weather.html', weather=weathers, location=location, feels=feels, temp=temp,
+                           tempCmp=int(float(temp)))
 
 
 # Converts Kelvin to Celsius
@@ -55,6 +76,7 @@ def weather():
         source = urllib.request.urlopen(
             'https://api.openweathermap.org/data/2.5/weather?q=' + city + '&appid=' + api_key).read()
     except:
+        print('api call unsuccessful')
         return abort(404)
 
     # Convert JSON data to dictionary
