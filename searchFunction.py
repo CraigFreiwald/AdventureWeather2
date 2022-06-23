@@ -1,9 +1,9 @@
+# A place to keep the API search function
+
 import json
 import urllib
 import urllib.request
 from formulas import toFahrenheit, toCelsius
-
-# A place to keep the API search formula
 
 
 def searchCity(city):
