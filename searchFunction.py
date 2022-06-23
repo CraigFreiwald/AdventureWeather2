@@ -25,8 +25,6 @@ def searchCity(city):
         "pressure": str(list_of_data['main']['pressure']),
         "humidity": str(list_of_data['main']['humidity']),
         "cityname": str(city),
-        # cityid is used when findID function is active
-        # "cityid": findID(city)
     }
     # Use data list to render info in index.html
     return data
