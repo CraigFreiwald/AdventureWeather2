@@ -45,6 +45,7 @@ def weather():
 
 @app.route('/results', methods=['POST'])
 def search():
+    # user input city
     city = request.form['city']
 
     # Use data list to render info in index.html

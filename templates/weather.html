@@ -3,8 +3,8 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 
-
-<form action="/weather" method="POST" class="col-md-6 col-md-offset-3" >
+<!-- Essential line -->
+<form action="/weather" method="Post" class="col-md-6 col-md-offset-3" >
 <head>
   <meta charset="utf-8">
   <Center><title>Adventure Weather</title></Center>
@@ -32,7 +32,7 @@
   <br />
   <center class="row">
 
-        <form method="POST" class="col-md-6 col-md-offset-3">
+        <form method="GET" class="col-md-6 col-md-offset-3">
             <div class="input-group">
             <input type="text" class="form-control" name="city" placeholder="Search">
             <div class="input-group-btn">
@@ -44,16 +44,7 @@
 
   </center>
   <div class="row">
-    {% if data.country_code and data.coordinate and data.temp and data.pressure and data.humidity %}
-    <div class="col-md-6 col-md-offset-3">
-        <h5>Country : {{data.country_code}}</h5>
-        <h5>City : {{data.cityname}}</h5>
-        <h5>Coordinates : {{data.coordinate}}</h5>
-        <h5>Temperature (in Fahrenheit) : {{data.temp}}</h5>
-        <h5>Temperature (in Celsius) : {{data.temp_cel}}</h5>
-        <h5>Pressure : {{data.pressure}} </h5>
-        <h5>Humidity : {{data.humidity}}</h5>
-    </div>
+
     <center class="row">
     <form method="GET">
         <div class="input-group-btn">
@@ -75,7 +66,7 @@
             var s = document.getElementsByTagName('script')[0];s.parentNode.insertBefore(script, s);  })();
         </script></h6>
         </center>
-    {% endif %}
+
 
   </div>
 </body>
