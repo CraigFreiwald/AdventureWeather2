@@ -1,4 +1,4 @@
-#   AdventureWeather2 - (in-progress)
+#   AdventureWeather2 - (deprecated - check out https://github.com/CraigFreiwald/AdventureWeather instead)
 
 
 
