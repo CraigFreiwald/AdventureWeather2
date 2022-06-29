@@ -14,8 +14,8 @@ A Flask web-app which provides current and expected weather to users.
 
 ### **Home Screen**
 
-![AdventureWeather2-HomeScreen](https://user-images.githubusercontent.com/98433413/175363201-c0b157fe-c2ac-447c-b84e-03d95f90387c.PNG)
 
+![AdventureWeather_SS(new)](https://user-images.githubusercontent.com/98433413/176510328-17656d9c-dccb-470b-848c-e8b32a914ac0.png)
 
 
 ## **To Run**
